@@ -1,0 +1,20 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Git continuous Download') { 
+            steps {
+                git branch: 'novera', url: 'https://github.com/uvsuresh/bank.git'
+            }
+        }
+        stage('Continuous Build') { 
+            steps {
+                sh 'mvn package' 
+            }
+        }
+        stage('Deploy to Tomcat') { 
+            steps {
+                sh 'cd /home/sureh/tomcat/webapps ; rm -rf demo* ; rm -rf demo.war; ls -ltr  ; id ; date ;cp /home/sureh/.jenkins/workspace/novera-pipeline/target/demo.war .' 
+            }
+        }
+    }
+}
